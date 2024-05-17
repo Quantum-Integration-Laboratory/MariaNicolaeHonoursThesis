@@ -1,0 +1,13 @@
+\chapter{\label{ap:barnett_longdell_reverse}Replicating and Reverse-Engineering Rabi Frequencies for Barnett and Longdell 2020}
+
+\begin{figure}[h]
+\centering
+\includegraphics{3lt-replication}
+\caption{\label{fig:3lt_replication} A replication of Figure 2 from Barnett and Longdell 2020\cite{barnett_longdell_2020}, using my own implementation of the model. The top row uses a $\qty{1}{\micro\watt}$ optical pump and $\qty{5}{\dBm}$ microwave drive, and the bottom row uses a $\qty{100}{\milli\watt}$ optical pump and $\qty{-75}{\dBm}$ microwave drive.}
+\end{figure}
+
+Barnett and Longdell 2020\cite{barnett_longdell_2020} does not specify pump Rabi frequencies used, but it does give pump powers, and pump powers $P_p$ and Rabi frequencies $\Omega_p$ are related by
+\begin{equation}
+    \Omega_p = \frac{\bra{3}\hat{d}\ket{2}}{\hbar} \sqrt{\frac{2\mu_0cP_p}{A}}
+\end{equation}
+where $A$ is the pump laser beam area. When replicating the paper's results, I found that an area corresponding to a $\qty{0.1}{\milli\metre}$ beam diameter gave good results for the high-pump data, and for the low-pump data when using $\qty{1}{\micro\watt}$ instead of the paper's stated $\qty{1}{\pico\watt}$, reasoning that the latter may have been a typo. This corresponds to Rabi frequencies of approximately $\qty{35}{\kilo\hertz}$ and $\qty{11}{\mega\hertz}$.

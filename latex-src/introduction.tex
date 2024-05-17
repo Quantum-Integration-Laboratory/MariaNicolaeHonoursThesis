@@ -1,0 +1,229 @@
+\chapter{Introduction}
+
+\section{Quantum Networking}
+There are a diverse range of quantum technologies presently being researched and developed. These include quantum computing\cite{divincenzo_2000}, quantum simulation\cite{macdonell_2021}, and quantum sensing and metrology\cite{giovannetti_2004}. Quantum computing is the algorithmic processing and transformation of data encoded in the joint state space (the \textit{Hilbert space}) of multiple two-level systems (\textit{qubits}), which can offer an exponential speed advantage over classical computers on certain algorithms. Quantum simulation uses an engineered, controllable quantum system, known as a quantum simulator, to implement a Hamiltonian analogous to that of some natural or less controlled quantum system, in order to study its behaviour. Quantum sensing and metrology uses the great sensitivity of quantum systems to their environments to make measurements more precise than classical equipment can.
+
+These systems have distinct applications from each other, but are not inherently interoperable. Additionally, all of these systems have proven challenging to scale up. \textit{Quantum networking} would alleviate both of these issues by allowing these systems to communicate quantum states between each other, rather than mere measurement outcomes as in classical networking. Quantum networking would greatly expand the joint Hilbert spaces of quantum computers and simulators, allowing them to solve larger problems, and allow them to interoperate with quantum sensors. It would also enable the use of quantum cryptography\cite{bennett_brassard_2014,yin_2016} in large, complex networks, which could enable eavesdropping to be detected, through a process analogous to the observer effect. Finally, quantum networking would enable fundamental experiments of quantum physics, such as tests of Bell's inequality, at greater scales than previously possible\cite{rosenfeld_2017}.
+
+\section{Correlating Microwave and Optical Photons}
+\begin{figure}[h]
+\centering
+\includetikzpicture{quantum-networking.tikz}
+\caption{\label{fig:quantum_networking} Quantum networking of two distant machines using transduction (top) and biphoton generation (bottom). Measurements of the combined optical signals entangle the two machines.}
+\end{figure}
+Many quantum technology platforms, such as superconducting circuits and trapped ions, have energy levels separated by microwave transition frequencies, meaning that they absorb and emit microwave photons. Directly transmitting single microwave photons between quantum devices, however, is impractical. This is because bulky and expensive cooling infrastructure is needed across the entire length of the link, to mitigate thermal microwave noise and loss.
+
+On the other hand, optical photons can much more easily be transmitted across multi-kilometre distances using optical fibres (and further if quantum repeaters\cite{briegel_1998} are used). Thermal noise is negligible for optical frequencies, even at room temperature, so no cooling is necessary. In order to use optical photons to network microwave-energy quantum systems, we would need to be able to entangle the quantum information in microwave and optical photons. This would require the use of hybrid systems that contain both optical and microwave degrees of freedom. One way to use such a hybrid system for quantum networking is \textit{transduction}, in which a transducer directly converts microwave and optical photons by absorbing one type and emitting the other type, and vice versa. Another approach is entangled microwave-optical photon pair generation (henceforth called \textit{biphoton generation} for short).
+
+Quantum networking using these processes is illustrated in Figure \ref{fig:quantum_networking}. To entangle two distant quantum machines, one approach would be for a microwave photon to be emitted from one machine, transduced to an optical photon, and then transduced back to a microwave photon at the other end, to interact with the other machine. Another approach, using biphoton generation, would be to generate entangled pairs on either end, interact the microwave photons with the machines, and interfere and measure the optical photons at some common destination.
+
+\section{Wave Mixing Processes}
+In order for microwave and optical photons to interact through some mediating system, that system must have some nonlinearity through which \textit{wave-mixing} processes, in which frequencies mix to produce new frequencies, can occur. The simplest of these processes are second-order \textit{three-wave mixing} processes, in which three frequencies are involved. These processes include \textit{sum frequency generation} (SFG), in which two input frequencies $\omega_1$ and $\omega_2$ mix to produce a third output frequency $\omega_3 = \omega_1+\omega_2$, \textit{difference frequency generation} (DFG), in which two input frequencies mix to produce an output frequency $\omega_3 = \abs{\omega_1-\omega_2}$, and \textit{spontaneous parametric downconversion} (SPDC), in which a single input frequency $\omega_1$ produces two output frequencies $\omega_2$ and $\omega_3$ for which $\omega_2+\omega_3 = \omega_1$.
+
+Transduction can be performed through the mixing of microwave frequencies $\omega_\mu$ and optical frequencies $\omega_o$ with an optical pump $\omega_p$; SFG $\omega_p+\omega_\mu = \omega_o$ for microwave to optical transduction and DFG $\abs{\omega_p-\omega_o} = \omega_\mu$ for optical to microwave transduction. An $\omega_\mu$ and $\omega_o$ photon pair can be generated through SPDC $\omega_p = \omega_o+\omega_\mu$. (Note that $\omega_p < \omega_o$ for transduction but $\omega_p > \omega_o$ for biphoton generation.)
+
+\section{Hybrid Microwave-Optical Quantum Systems}
+\begin{figure}[h]
+\centering
+    \begin{subfigure}{0.32\textwidth}
+    \centering
+    \includetikzpicture{chi-2.tikz}
+\end{subfigure}
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includetikzpicture{optomechanics.tikz}
+\end{subfigure}
+\begin{subfigure}{0.32\textwidth}
+    \centering
+    \includetikzpicture{hybrid-atomic-system.tikz}
+\end{subfigure}
+\caption{\label{fig:hybrid_systems} Hybrid microwave-optical platforms illustrated, including $\chi^{(2)}$-nonlinear dielectric media (left), optomechanical systems (middle), and atomic energy levels (right).}
+\end{figure}
+Many different hybrid systems and processes have been proposed and experimentally studied for use in transduction and biphoton generation. One example of such systems are dielectric media with secord-order nonlinear polarisabilities \cite{rueda_2016,rueda_2019,sahu_2023} ($\chi^{(2)} \neq 0$). In these media, incident electromagnetic waves create time-varying polarisation in the material at new frequencies that are then emitted, giving rise to three-wave mixing. Another example is optomechanical systems\cite{bochmann_2013,higginbotham_2018}, in which a mechanical resonator simultaneously constitutes a mirror in an optical resonant cavity and a capacitor in a microwave resonator. This results in coupling between the optical, mechanical, and microwave modes. Yet another platform is atoms with both microwave and optical transitions between their energy levels\cite{staudt_2012,probst_2013}, in which both types of photons can interact with atomic transitions. Reviews of the various systems can be found at References \cite{lambert_2020,lauk_2020}. My project focuses on atomic systems in particular.
+
+\section{Hybrid Atomic Systems}
+\begin{figure}[h]
+\centering
+\includetikzpicture{lambda-and-v-systems.tikz}
+\caption{\label{fig:lambda_and_v_systems} Transduction in a \textLambda-system (left) and V-system (middle), and biphoton generation in a \textLambda-system (right).}
+\end{figure}
+
+\noindent Atoms can be used for transduction by working in a three-level system consisting of two levels separated by a microwave transition and a third level separated from the other two by optical transitions. This can either be a \textit{\textLambda-system}, in which the $\ket{1}$ and $\ket{2}$ levels are microwave-separated, or a \textit{V-system}, in which $\ket{2}$ and $\ket{3}$ are microwave-separated\footnote{\textLambda-systems and V-systems are named as such because the two optical transitions form diagrams resembling those glyphs.}. To perform transduction in a \textLambda-system, $\ket{2}\leftrightarrow\ket{3}$ is pumped so that absorption of a microwave photon by the $\ket{1}\to\ket{2}$ transition results in coherence between the $\ket{1}$ and $\ket{3}$ levels and ultimately the emission of an optical photon from the $\ket{3}\to\ket{1}$ transition, and vice-versa. In a V-system, $\ket{1}\to\ket{2}$ is pumped, microwave signals interact with the $\ket{2}\leftrightarrow\ket{3}$ transition, and optical signals interact with $\ket{1}\leftrightarrow\ket{3}$. Biphoton generation can be performed by pumping $\ket{1}\to\ket{3}$ to obtain continuous output of $\ket{3}\to\ket{2}$ and $\ket{2}\to\ket{1}$ photon pairs. These processes are illustrated in Figure \ref{fig:lambda_and_v_systems}.
+
+\begin{figure}[h]
+\centering
+\input{inhomogeneous-broadening.pgf}
+\caption{\label{fig:inhomogeneous_broadening} Inhomogeneous broadening of an atomic ensemble's absorption spectrum. The individual atoms have absorption spectra (grey filled curves) that are slightly shifted from each other, resulting in an overall ensemble absoption spectrum (dashed line) that is broader than the individual atom spectrum.}
+\end{figure}
+
+Atoms can be used in quantum technology as electromagnetically trapped ions or neutral atoms, or as constituents of crystals, with the latter being the focus of my project. Atoms in crystals are more miniaturisable and therefore scalable than trapped atoms because they do not need trapping infrastructure; confinement is provided by the crystal. Scaling is desirable because the more atoms are used, the stronger their collective interactions with the microwave and optical signals are. However, atomic ensembles in crystals are subject to \textit{inhomogeneous broadening} of the collective spectral line shapes, compared to individual atoms.
+
+Let the absorption spectrum of a single atom around its transition frequency $\omega_0$ (the \textit{homogeneous} lineshape) be $\alpha_S(\omega-\omega_0)$. The absorption spectrum of $N$ atoms of the same species, if all atoms had the same transition frequency, would simply be
+\begin{equation}
+    \alpha_E(\omega) = N\alpha_S(\omega-\omega_0).
+\end{equation}
+However, in a crystal, every atom has its own slightly different transition frequency $\omega_0$. This is because each atom has a slightly different local electromagnetic field due to strain and defects in the crystal, which shift the atomic energy levels via effects such as the Stark and Zeeman effects, by a different amount for each atom. Given that the atomic transition frequencies are distributed with probability density function (PDF) $p(\omega_0)$, the absorption spectrum of an $N$-atom ensemble (the \textit{inhomogeneous} lineshape) is
+\begin{equation}
+    \label{eq:inhomogeneous_convolution}
+    \alpha_E(\omega) = N \int_0^\infty \alpha_S(\omega-\omega_0)p(\omega_0)\:d\omega_0 = N\alpha_S * p.
+\end{equation}
+This is at least as wide as the homogeneous line width, and is usually much wider.
+
+\subsection{Rare Earths}
+Of all atomic species one could use for hybrid systems, rare earths are a leading candidate. Their states have long coherence times, such as nuclear spin coherence times longer than $\qty{1}{\second}$ in Er\textsuperscript{3+}\cite{ranvcic_2018} and up to 6 hours in Eu\textsuperscript{3+}\cite{zhong_2015}, and electronic coherence times of $\qty{4}{\milli\second}$ in Er\textsuperscript{3+}\cite{bottger_2009}. Rare earths also have narrow inhomogeneous linewidths\cite{vleck_1937}, $\unit{\mega\hertz}$ for microwave transitions and hundreds of $\unit{\mega\hertz}$ for optical transitions. Both of these properties are the result of the full $5s$ and $5p$ electron shells of rare earths having larger radii than their $4f$ valence shells, which shields the latter from the external environment\cite{wybourne_book}. Erbium in particular has an optical transition frequency in the infrared telecommunications band which is attenuated least by optical fibres, making it well-suited for long-distance communication and networking applications.
+
+\section{\label{sec:quantum_theory}Background Quantum Theory}
+This section explains the quantum-mechanical formalisms that are used throughout the remainder of the thesis. This begins with \textit{second quantisation}, the quantum description of light and systems that interact with light (\textit{quantum emitters}), and then describes those interactions as exchanges of energy quanta, and a semiclassical approximation thereof. Then, the theory of inputs and outputs of quantum systems is presented. Finally, a formalism for quantum decoherence is presented; due to this being a stochastic phenomenon, this formalism is expressed in terms of probabilistic mixtures of quantum states.
+
+\subsection{Second Quantisation}
+In the formalism of \textit{second quantisation}, quantum systems are analysed as being composed of components (\textit{modes}) which are occupied by energy quanta. These modes have Hamiltonians of the form
+\begin{equation}
+    \hbar\omega_0\hat{n} \label{eq:second_quantisation_hamiltonian}
+\end{equation}
+where
+\begin{equation}
+    \hat{n} = \sum_n n\ket{n}\bra{n} \label{eq:number_operator_definition}
+\end{equation}
+is the observable for the number of energy quanta in the mode, and $\hbar\omega_0$ is the energy quantum.
+
+For a \textit{bosonic} mode, the sum in Equation \ref{eq:number_operator_definition} is over $n = 0, 1, 2, \dots$, i.e. an arbitrarily large number of quanta can occupy the mode. An electromagnetic cavity mode is a bosonic mode, with the energy quanta being photons. For a \textit{fermionic} mode, only one quantum can occupy it, and $n=0,1$ only. The fermionic $\ket{0}$ and $\ket{1}$ states are sometimes alternatively denoted $\ket{g}$ (\textit{ground}) and $\ket{e}$ (\textit{excited}) respectively. A two-level quantum emitter is a fermionic mode, and the level pairs of multi-level systems like atoms can be modelled as fermionic modes.
+
+\subsubsection{Ladder Operators}
+The \textit{number operator}
+\begin{equation}
+\hat{n}=\hat{c}^\dagger\hat{c} \label{eq:number_operator_from_ladders}
+\end{equation}
+is composed of a \textit{lowering operator} $\hat{c}$ and a \textit{raising} operator\footnote{Alternatively, \textit{annihilation} and \textit{creation} operator respectively} $\hat{c}^\dagger$. These ladder operators act on number states by lowering or raising them respectively to adjacent number states. Specifically, the bosonic ladder operators act on number states by
+\begin{equation}
+    \hat{a}\ket{n} = \sqrt{n}\ket{n-1}, \quad \hat{a}^\dagger\ket{n} = \sqrt{n+1}\ket{n+1},
+\end{equation}
+and the fermionic ladder operators are
+\begin{equation}
+    \hat{\sigma} = \ket{0}\bra{1}, \quad \hat{\sigma}^\dagger = \ket{1}\bra{0};
+\end{equation}
+$\hat{c}$ in Equation \ref{eq:number_operator_from_ladders} is any one of $\hat{a}$ or $\hat{\sigma}$. These operators have commutation relations\footnote{Here, unlike in Equation \ref{eq:second_quantisation_hamiltonian}, $\hbar=1$ is used and $\hbar$ is dropped accordingly. The same will be done in the remainder of this thesis.}
+\begin{equation}
+    [\hat{a}, \hat{a}^\dagger] = \hat{\mathds{1}}, \quad [\hat{\sigma}, \hat{\sigma}^\dagger] = \hat{\mathds{1}} - 2\hat{\sigma}^\dagger\hat{\sigma}.
+\end{equation}
+As the notation suggests, ladder operators are Hermitian conjugates of each other, and the lowering operator, by convention, is the one represented without a dagger.
+
+\subsection{Light-Matter Interactions}
+
+\subsubsection{Quantum Model}
+In the language of second quantisation, light-matter interactions are described in terms of an electromagnetic cavity with lowering operator $\hat{a}$ and a two-level quantum emitter with lowering operator $\hat{\sigma}$. Here I consider light-matter interactions through the dipole interaction, which, for the example of an electric dipole, is represented by a Hamiltonian
+\begin{equation}
+    \hat{H} = \hat{H}_\text{light} + \hat{H}_\text{emitter} - \vhat{d} \cdot \vhat{E}.
+\end{equation}
+$\vhat{d}$ is the dipole moment operator of the emitter, and can therefore be expressed in terms of $\hat{\sigma}$, and $\vhat{E}$ is the electric field operator, which can be expressed in terms of $\hat{a}$. Making appropriate approximations\footnote{The \textit{rotating wave approximation}} and writing the result out in terms of mode operators yields the \textit{Jaynes-Cummings Hamiltonian}\cite{jaynes_cummings_1963,gerry_knight_book}
+\begin{equation}
+    \hat{H}_\text{JC} = \omega_r\hat{a}^\dagger\hat{a} + \omega_a\hat{\sigma}^\dagger\hat{\sigma} + g(\hat{a}\hat{\sigma}^\dagger + \hat{a}^\dagger\hat{\sigma}). \label{eq:jaynes_cummings_hamiltonian}
+\end{equation}
+Here, $\omega_r$ is the resonant frequency of the cavity, $\omega_a$ is the transition frequency of the emitter, and $g$ is a constant representing the strength of the interaction. The terms $\hat{a}\hat{\sigma}^\dagger$ and $\hat{a}^\dagger\hat{\sigma}$ that are scaled by $g$ represent the interaction itself as the transfer of energy quanta between the cavity and the emitter. Because this interaction is through the dipole mechanism, the interaction strength is proportional to
+\begin{equation}
+    g \propto \bra{g} \hat{d}_{\parallel} \ket{e} \label{eq:g_dipole_moment}
+\end{equation}
+the component of the dipole moment matrix element parallel to the light polarisation.
+
+\subsubsection{\label{ssubs:semiclassical_light_matter}Semiclassical Approximation and Rabi Frequencies}
+A unitary transformation of Equation \ref{eq:jaynes_cummings_hamiltonian} eliminates the cavity energy term to obtain
+\begin{equation}
+    \hat{H} = \omega_a\hat{\sigma}^\dagger\hat{\sigma} + g\hat{a}e^{-i\omega_rt} \hat{\sigma}^\dagger + g\hat{a}^\dagger e^{i\omega_rt} \hat{\sigma}.
+\end{equation}
+To form a semiclassical approximation, the cavity operator $\hat{a}$ is replaced with a complex number $\alpha$ that represents the amplitude and phase of a `classical-like' cavity state\footnote{Known as a \textit{coherent state}; see Reference \cite{gerry_knight_book}.}, scaled so that $\abs{\alpha}^2 = \angbr{\hat{n}}$ resulting in the semiclassical \textit{mean-field} model in \cite{walls_milburn_book}, a Hamiltonian which, in the $(\ket{g}, \ket{e})$ basis of the emitter, is
+\begin{equation}
+    \hat{H} =
+    \begin{bmatrix}
+        0 & g\alpha^* e^{i\omega_rt}\\
+        g\alpha e^{-i\omega_rt} & \omega_a
+    \end{bmatrix}. \label{eq:two_level_time_dependent_rabi_hamiltonian}
+\end{equation}
+This represents the dipole interaction between a quantum emitter and a classical oscillating electromagnetic field in terms of the \textit{Rabi frequency} $\Omega = g\alpha$. More specifically, for the example of an electric dipole,
+\begin{equation}
+    \Omega = \frac{\bra{g}\vhat{d}\ket{e} \cdot \vec{\mathcal{E}}_0}{\hbar} \label{eq:rabi_frequency_dipole_moment}
+\end{equation}
+where $\vec{\mathcal{E}}_0$ is the complex amplitude of the electric field. This model therefore also applies to emitters driven by waveguides or free-space light beams, for some $\Omega$ that has no interpretation as a $g\alpha$. A unitary transformation of Equation \ref{eq:two_level_time_dependent_rabi_hamiltonian} gives a time-independent Hamiltonian
+\begin{equation}
+    \hat{H} =
+    \begin{bmatrix}
+        0 & \Omega^*\\
+        \Omega & \omega_a-\omega_r
+    \end{bmatrix}. \label{eq:two_level_time_independent_rabi_hamiltonian}
+\end{equation}
+Furthermore, Equation \ref{eq:two_level_time_dependent_rabi_hamiltonian} can be extended quite simply to driven multi-level systems: for energy levels indexed by $k$ and drives indexed by $\ell$,
+\begin{equation}
+    \hat{H} = \sum_{k} \omega_k\hat{\sigma}_{kk} + \sum_{\ell} \left(\Omega_\ell e^{i\omega_\ell t} \hat{\sigma}_{i_\ell j_\ell} + \Omega^*_\ell e^{-i\omega_\ell t} \hat{\sigma}_{j_\ell i_\ell}\right) \label{eq:multi_level_time_dependent_rabi_hamiltonian}
+\end{equation}
+where $\hat{\sigma}_{ij} = \ket{i}\bra{j}$ are unit matrices and $i_\ell j_\ell$ are the transitions driven by drive $\ell$.
+
+\subsection{\label{subs:heisenberg_picture}The Heisenberg Picture}
+The \textit{Heisenberg picture} of quantum mechanics is a formulation of quantum mechanics in which operators evolve in time, but state vectors (kets) are static, representing initial conditions. This is in opposition to the \textit{Schr\"{o}dinger picture}. Operators in the Heisenberg picture obey the \textit{Heisenberg equation}\cite{sakurai_book}
+\begin{equation}
+    \frac{d\hat{A}}{dt} = -i[\hat{A}, \hat{H}].
+\end{equation}
+When forming semiclassical approximations that replace light operators with amplitudes, such as in Subsection \ref{ssubs:semiclassical_light_matter}, the Heisenberg equation of a light operator becomes the differential equation of the amplitude.
+
+\subsubsection{\label{ssubs:input_output_theory}Langevin Equations and Input-Output Theory}
+If we have some system, with Hamiltonian $\hat{H}_\text{sys}$ that is coupled through an operator $\hat{c}$ to a waveguide or transmission line, \textit{input-output theory}\cite{gardiner_collett_1985} provides a quantum model of such a system, which includes the dynamics of some (not necessarily bosonic) system operator $\hat{a}$ expressed in terms of modified Heisenberg equation, known as a \textit{Langevin equation},
+\begin{equation}
+    \frac{d\hat{a}}{dt} = -i[\hat{a}, \hat{H}_\text{sys}] + [\hat{a}, \hat{c}^\dagger]\left(-\frac{\gamma}{2}\hat{c} + \sqrt{\gamma}\hat{b}_\text{in}(t)\right) + \left(\frac{\gamma}{2}\hat{c}^\dagger - \sqrt{\gamma}\hat{b}_\text{in}^\dagger(t)\right)[\hat{a}, \hat{c}]. \label{eq:general_langevin_equation}
+\end{equation}
+Here, $\hat{b}_\text{in}(t)$ is a bosonic-like operator representing the input from the waveguide into the system at time $t$, and $\gamma$ is the rate of energy loss from $\hat{c}$ into the waveguide. A similar output operator is
+\begin{equation}
+    \hat{b}_\text{out}(t) = -\hat{b}_\text{in}(t) + \sqrt{\gamma}\hat{c}.
+    \label{eq:input_output_theory_output}
+\end{equation}
+The operators $\hat{b}_\text{in}(t)$ and $\hat{b}_\text{out}(t)$ at one time and at another time correspond to separate modes, and should not be interpreted as any sort of time evolution. Loosely speaking, we can think of these operators as representing $\delta$-function pulses that arrive at the system at time $t$, which can be integrated over to form arbitrary signals.
+
+\subsection{Density Matrices and the Master Equation}
+A \textit{density matrix}\cite{breuer_book} for a system is an operator which describes the probability distribution of states in that system, distinguishing `classical' probability from quantum superpositions. For states $\ket{\psi_k}$ with probabilities $p_k$, the density matrix is
+\begin{equation}
+    \hat{\rho} = \sum_k p_k \ket{\psi_k}\bra{\psi_k}. \label{eq:density_matrix_definition}
+\end{equation}
+In the Schr\"{o}dinger picture, density matrices evolve according to the \textit{Master equation}\footnote{Alternatively, the \textit{Lindblad equation}}
+\begin{equation}
+    \frac{d\hat{\rho}}{dt} = -i[\hat{H}, \hat{\rho}].
+\end{equation}
+The expectation value of an operator $\hat{O}$ can be calculated from a density matrix $\hat{\rho}$ as
+\begin{equation}
+    \angbr{\hat{O}} = \tr(\hat{\rho}\hat{O}), \label{eq:density_matrix_expectation_value}
+\end{equation}
+which, for a density matrix of the form in Equation \ref{eq:density_matrix_definition}, is the weighted sum of the expectation value for all $\ket{\psi_k}$ states
+\begin{equation}
+    \angbr{\hat{O}} = \sum_k p_k \bra{\psi_k}\hat{O}\ket{\psi_k}.
+\end{equation}
+
+\subsubsection{Density Matrices and Quantum Decoherence}
+Consider the density matrix of a two-level system. A pure ground state $\ket{0}$ has density matrix
+\begin{equation}
+    \hat{\rho} = \ket{0}\bra{0} =
+    \begin{bmatrix}
+        1 & 0\\
+        0 & 0
+    \end{bmatrix},
+\end{equation}
+whereas an even probabilistic mixture of $\ket{0}$ and $\ket{1}$ has density matrix
+\begin{equation}
+    \hat{\rho} = \frac{1}{2}\left(\ket{0}\bra{0}+\ket{1}\bra{1}\right) =
+    \begin{bmatrix}
+        \frac{1}{2} & 0\\
+        0 & \frac{1}{2}
+    \end{bmatrix}.
+\end{equation}
+This demonstrates that the diagonal elements of a density matrix represent probabilities of states. Indeed, $\tr\hat{\rho}=1$. The even superposition $\ket{\psi} = \frac{1}{\sqrt{2}}\left(\ket{0}+\ket{1}\right)$ has density matrix
+\begin{equation}
+    \hat{\rho} = \ket{\psi}\bra{\psi} =
+    \begin{bmatrix}
+        \frac{1}{2} & \frac{1}{2}\\
+        \frac{1}{2} & \frac{1}{2}
+    \end{bmatrix},
+\end{equation}
+which demonstrates that the off-diagonal elements represent \textit{coherences} between states. That is to say, they distinguish between superpositions and classical probabilities.
+
+Density matrices are a useful formalism for expressing quantum decoherence. The two types of decoherence in quantum systems are \textit{depolarisation} and \textit{dephasing}. Depolarisation is unwanted transitions between states, which includes transitions to lower-energy states (\textit{relaxation}) as well as unwanted excitations to higher-energy states. In a density matrix, this is represented by changes in the diagonal elements. Dephasing is drift in relative phase between states, caused by fluctuations in the energy levels. This is represented by decreases in the magnitudes of the off-diagonal elements. The dynamics of decoherence can be represented by additional terms in the Master equation. For decoherence resulting from the coupling of operators $\hat{A}_k$ to the environment, with rates $\gamma_k$, the Master equation becomes
+\begin{equation}
+    \frac{d\hat{\rho}}{dt} = -i[\hat{H}, \hat{\rho}] + \sum_k \frac{\gamma_k}{2}\left(2\hat{A}_k\hat{\rho}\hat{A}_k^\dagger - \hat{A}_k^\dagger\hat{A}_k\hat{\rho} - \hat{\rho}\hat{A}_k^\dagger\hat{A}_k\right).
+\end{equation}
+In both the original and prior modelling work presented in this thesis, density matrices are used to represent the states of atoms, but not cavities. This is because cavities do not dephase, only depolarise by gaining and losing photons, and so the input-output formalism of Subsection \ref{ssubs:input_output_theory} is better suited.
+
+\section{Outline of Thesis}
+This thesis is structured as follows. Chapter \ref{ch:prior_transduction} mostly presents prior work on both numerical and analytical modelling for atomic ensemble based microwave-optical transduction, that the original work in this thesis builds from. At the end of that chapter, in Section \ref{sec:rho_ji_vs_ij}, it describes original work on analysing phase conventions and relations in that model. Chapter \ref{ch:four_level_transduction} describes original numerical modelling for transduction in four-level atomic systems. This model computes transduction signal strengths, and thereby conversion efficiencies. The chapter also compares model and experimental results. Chapter \ref{ch:biphoton_generation} describes numerical modelling for the pair generation rate resulting from biphoton generation in three-level atomic systems. Finally, Chapter \ref{ch:conclusion} concludes the thesis.

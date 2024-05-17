@@ -1,0 +1,29 @@
+\chapter{\label{ap:printed_code}Code Listings}
+
+This appendix contains the `core' model code. Full code for generating the figures in this thesis, and the data used in those figures, can be found in the GitHub repository for this thesis \url{https://github.com/Quantum-Integration-Laboratory/MariaNicolaeHonoursThesis}.
+
+\section{Three-Level Transduction Replication}
+These codes are my own implementations of the prior three-level transduction models of Chapter \ref{ch:prior_transduction}. They were written quite early in the project, and so follow the notation of the original sources rather than the notation in this thesis.
+
+\subsection{Single Cavity}
+This Python code replicates the single-cavity model in Reference \cite{fernandez-gonzalvo_2019}. When run as a script, it replicates Figure 4(e) in that paper.
+\lstinputlisting[language=python]{tlt_single_cavity.py}
+
+\subsection{Double Cavity}
+This Python code replicates the double-cavity model in Reference \cite{barnett_longdell_2020}. It is `library' code that is not a script in its own right. The GitHub repository contains scripts that \texttt{import} this code.
+\lstinputlisting[language=python]{tlt_double_cavity.py}
+
+\section{Four-Level Transduction}
+This Python code implements the four-level transduction model in Chapter \ref{ch:four_level_transduction}. When imported into a Python script, it expects to be able to save and load a file into a directory called \texttt{result-cache}. When run as a script, it does the aforementioned saving and loading and nothing else. The notation in this code differs from that in this thesis, mainly in that the $23$, $13$, $24$, and $14$ transitions are labelled $A$, $B$, $D$, and $E$ respectively. Additionally, $\delta_p$ is instead called $\delta_B$.
+\lstinputlisting[language=python]{flt_model.py}
+
+\section{Biphoton Generation}
+These codes implement the three-level biphoton generation models in Chapter \ref{ch:biphoton_generation}.
+
+\subsection{Steady State}
+This Python code implements the steady-state model. When run as a script, it performs root finding for cavity steady-states, and prints the (non-convergent) results of this root finding, for two sets of detuning parameters.
+\lstinputlisting[language=python]{biphoton_steady_state.py}
+
+\subsection{Super-Atom Dynamics}
+This CUDA code implements the super-atom dynamical model. When compiled and ran, it performs a simulation and saves the results as binary files in the working directory.
+\lstinputlisting[language=C]{biphoton_super_atom.cu}

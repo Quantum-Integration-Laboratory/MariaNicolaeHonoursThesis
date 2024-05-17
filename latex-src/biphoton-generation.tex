@@ -1,0 +1,178 @@
+\chapter{\label{ch:biphoton_generation}Biphoton Generation in 3-Level Systems}
+
+This chapter describes original work on modelling the generation rate of photon pairs from biphoton generation in a three-level system, using both dynamical and steady-state models. This happens in the same type of atoms-in-cavity system as in Chapter \ref{ch:prior_transduction}, and this chapter begins by describing how I adapt the three-level transduction model of Reference \cite{barnett_longdell_2020} for biphoton generation. In addition to a steady-state model of the kind in Reference \cite{barnett_longdell_2020}, I produce an approximation of the dynamical model which reduces the degrees of freedom to a number tractable to simulate. This chapter then presents results for both the steady-state and dynamical models. Unlike the four-level transduction model of Chapter \ref{ch:four_level_transduction}, these results are not benchmarked against any specific experimental data.
+
+\section{\label{sec:biphoton_dynamical_model}Dynamical Model}
+Adapting from Equations \ref{eq:input_output_relation_a}, \ref{eq:input_output_relation_b}, \ref{eq:three_level_atom_master_equation}, and \ref{eq:semiclassical_optical_cavity_langevin}, and using the $\hat{\sigma}_{ij,k}\to\rho_{ji,k}$ semiclassical approximation as per Section \ref{sec:rho_ji_vs_ij}, a semiclassical model for transduction in a three-level system with an ensemble of $N$ atoms is the system of $N+2$ coupled differential equations
+\begin{align}
+    \frac{d\alpha}{dt} &= -i\delta_{co}\alpha -i\sum_{k=1}^{N} g_{o,k}^*\rho_{31,k} - \frac{\gamma_{oi}+\gamma_{oc}}{2}\alpha + \sqrt{\gamma_{oc}}\alpha_\text{in} \label{eq:three_level_transduction_langevin_a}\\
+    \frac{d\beta}{dt} &= -i\delta_{c\mu}\beta -i\sum_{k=1}^{N} g_{\mu,k}^*\rho_{j_\mu i_\mu,k} - \frac{\gamma_{\mu i}+\gamma_{\mu c}}{2}\beta + \sqrt{\gamma_{\mu c}}\beta_\text{in}\\
+    \frac{d\hat{\rho}_k}{dt} &= \mathcal{L}_k(\alpha, \beta)\hat{\rho}_k = -i[\hat{H}_{\text{atom},k}(\alpha, \beta), \hat{\rho}_k] + \mathcal{L}_{\text{dec},k}\hat{\rho}_k
+\end{align}
+and the semiclassical input-output relations
+\begin{align}
+    \alpha_\text{out} &= -\alpha_\text{in} + \sqrt{\gamma_{oc}}\alpha\\
+    \beta_\text{out} &= -\beta_\text{in} + \sqrt{\gamma_{\mu c}}\beta.
+\end{align}
+Here, $\ket{i_\mu}\leftrightarrow\ket{j_\mu}$ is the microwave transition. To adapt this for biphoton generation, I first swap the indices of the optical pump and signal transitions so that $\ket{1}\to\ket{3}$ is being pumped and $\ket{3}\to\ket{2}$ and $\ket{2}\to\ket{1}$ are producing output signals, turning Equation \ref{eq:three_level_transduction_langevin_a} into
+\begin{equation}
+    \frac{d\alpha}{dt} = -i\delta_{co}\alpha -i\sum_{k=1}^{N} g_{o,k}^*\rho_{j_o i_o,k} - \frac{\gamma_{oi}+\gamma_{oc}}{2}\alpha + \sqrt{\gamma_{oc}}\alpha_\text{in}
+\end{equation}
+where $\ket{j_o}\to\ket{i_o}$ is the optical-emitting transition, and the driven atom Hamiltonian into
+\begin{equation}
+    \label{eq:biphoton_atom_hamiltonian}
+    \hat{H}_{\text{atom},k} =
+    \begin{cases}
+        \begin{bmatrix}
+            0 & g_{\mu,k}^*\beta^* & \Omega_{p,k}^*\\
+            g_{\mu,k}\beta & \delta_{\mu,k} & g_{o,k}^*\alpha^*\\
+            \Omega_{p,k} & g_{o,k}\alpha & \delta_{p,k}
+        \end{bmatrix} & \text{\textLambda-system}\\
+        \begin{bmatrix}
+            0 & g_{o,k}^*\alpha^* & \Omega_{p,k}^*\\
+            g_{o,k}\alpha & \delta_{o,k} & g_{\mu,k}^*\beta^*\\
+            \Omega_{p,k} & g_{\mu,k}\beta & \delta_{p,k}
+        \end{bmatrix} & \text{V-system}
+    \end{cases}.
+\end{equation}
+Next, I set the input amplitudes to $\alpha_\text{in} = 0 = \beta_\text{in}$, because the optical and microwave cavities are used only for output in biphoton generation, not for any input. Note that the input \textit{operators} are not zero because of this, only their expectation values. Furthermore, I set the cavity-signal detunings $\delta_{co} = 0 = \delta_{c\mu}$. This is because there are two output frequencies but only one input (pump) frequency, and so, unlike in transduction, an experimenter cannot arbitrarily control the output frequencies by adjusting the input frequency. Instead, the output frequencies are constrained to be as close to the cavity resonances as possible. Putting these together, the cavity Langevin equations and input-output relations become
+\begin{align}
+    \frac{d\alpha}{dt} &= -i\sum_{k=1}^{N} g_{o,k}^*\rho_{j_oi_o,k} - \frac{\gamma_{oi}+\gamma_{oc}}{2}\alpha \label{eq:biphoton_optical_cavity_langevin_equation}\\
+    \frac{d\beta}{dt} &= -i\sum_{k=1}^{N} g_{\mu,k}^*\rho_{j_\mu i_\mu,k} - \frac{\gamma_{\mu i}+\gamma_{\mu c}}{2}\beta \label{eq:biphoton_microwave_cavity_langevin_equation}\\
+    \alpha_\text{out} &= \sqrt{\gamma_{oc}}\alpha\\
+    \beta_\text{out} &= \sqrt{\gamma_{\mu c}}\beta.
+\end{align}
+
+\subsection{Vacuum Rabi Frequency}
+Suppose that an atom in this system is initially in the ground state so that its density matrix $\hat{\rho} = \ket{1}\bra{1}$, and consider what happens in the model described so far as the optical pump $\Omega_p$ is applied. This pump will transfer population from $\ket{1}$ to $\ket{3}$ and generate coherence ($\rho_{13}\neq 0$) between these two levels, so that, in the absence of decoherence, the density matrix becomes
+\begin{equation}
+    \hat{\rho} =
+    \begin{bmatrix}
+        \rho_{11} & 0 & \rho_{13}\\
+        0 & 0 & 0\\
+        \rho_{31} & 0 & \rho_{33}
+    \end{bmatrix}.
+\end{equation}
+Now consider the effect of decoherence. Depolarisation will transfer some population into level $\ket{2}$ so that $\rho_{22}\neq 0$, and dephasing will decrease the magnitude of all off-diagonal elements, of which only $\rho_{13} = \rho_{31}^*$ are nonzero. At no point in this process of pumping the atom with losses, then, do $\rho_{21}$ or $\rho_{32}$ become nonzero. This means that there is no emission into the cavities, because those density matrix elements are the ones in the cavity Langevin equations. This is clearly unphysical, and therefore indicates a deficiency in the model described so far.
+
+The problem is that the biphoton generation process is kickstarted, from cavities in vacuum, by interactions between the atoms and fluctuations in the cavity's vacuum field. This model is a mean-field approximation, and therefore does not account for fluctuations in the cavity field. This vacuum interaction can be treated as having an effective Rabi frequency equal to the atom-cavity coupling, $g_{o,k}$ for the optical cavity and $g_{\mu,k}$ for the microwave cavity, known as a \textit{vacuum Rabi frequency}\cite{gerry_knight_book}. To capture this in the model, then, I modify the cavity Rabi frequencies from Equation \ref{eq:biphoton_atom_hamiltonian}
+\begin{align}
+    \Omega_{o,k} &= g_{o,k}\alpha\\
+    \Omega_{\mu,k} &= g_{\mu,k}\beta
+\end{align}
+so that, as $\alpha \to 0$, $\abs{\Omega_{o,k}} \to \abs{g_{o,k}}$ (vice-versa for $\beta$ and $\Omega_{\mu,k}$). Such a modified expression should also be approximately the same as the original for large cavity amplitudes
+\begin{align}
+    \alpha \gg 1 &\implies \Omega_{o,k} \approx g_{o,k}\alpha\\
+    \beta \gg 1 &\implies \Omega_{\mu,k} \approx g_{\mu,k}\beta
+\end{align}
+where stimulated emission, which is a function of the mean field, dominates. If I furthermore require that the phases of the original and modified cavity Rabi frequencies match, then the modified expression should be of the form
+\begin{align}
+    \Omega_{o,k} &= g_{o,k}e^{i\arg\alpha} f(\abs{\alpha})\\
+    \Omega_{\mu,k} &= g_{\mu,k}e^{i\arg\beta} f(\abs{\beta})
+\end{align}
+where $f: \mathbb{R}_+ \to \mathbb{R}_+$ is a function for which $f(0)=1$ and $x\gg 1 \implies f(x)\approx x$. I select $f(x) = \sqrt{x^2+1}$ as such a function, to obtain the modified Rabi frequencies
+\begin{align}
+    \Omega_{o,k} &= g_{o,k}e^{i\arg\alpha} \sqrt{\abs{\alpha}^2+1}\\
+    \Omega_{\mu,k} &= g_{\mu,k}e^{i\arg\beta} \sqrt{\abs{\beta}^2+1}.
+\end{align}
+
+\section{Steady States}
+Taking the approach of Subsection \ref{subs:steady_states}, the steady states of Equations \ref{eq:biphoton_optical_cavity_langevin_equation} and \ref{eq:biphoton_microwave_cavity_langevin_equation} can be expressed as a root-finding problem by replacing the dynamical atomic density matrices with steady-state density matrices and replacing the sum over the atoms with an integral over the inhomogeneous distribution, obtaining expressions for the `residuals' which are zero at steady state
+\begin{align}
+    \alpha_\text{res} &= -iN_og_o^* \iint \rho_{j_oi_o,SS}(\alpha, \beta, \delta_{12}, \delta_{23}) p(\delta_{12}, \delta_{23})\:d\delta_{12}d\delta_{23} - \frac{\gamma_{oi}+\gamma_{oc}}{2}\alpha \label{eq:biphoton_optical_cavity_steady_state_residual}\\
+    \beta_\text{res} &= -iN_\mu g_\mu^* \iint \rho_{j_\mu i_\mu,SS}(\alpha, \beta, \delta_{12}, \delta_{23}) p(\delta_{12}, \delta_{23})\:d\delta_{12}d\delta_{23} - \frac{\gamma_{\mu i}+\gamma_{\mu c}}{2}\beta. \label{eq:biphoton_microwave_cavity_steady_state_residual}
+\end{align}
+Here, the same simplifying assumptions as in Subsection \ref{subs:steady_states} have been made about the atom-cavity couplings and pump Rabi frequencies, namely that $\Omega_p = \Omega_{p,k}$ is identical across all atoms, that $N_o \leq N$ atoms have the same optical cavity coupling strength $g_o = g_{o,k}$ and the remaining $N-N_o$ atoms do not couple to the optical cavity at all, and that $N_\mu \leq N$ atoms have the same microwave cavity coupling strength $g_\mu = g_{\mu,k}$ with the remaining $N-N_\mu$ atoms not coupling to the microwave cavity at all.
+
+\section{Super-Atom Dynamics}
+The $N+2$ coupled differential equations of this model are intractable to solve the dynamics of, because $N$ is very large in realistic systems. To make this tractable, I make the approximation that the $N$ atoms can be partitioned into $n\ll N$ sets with the same atom-cavity couplings and inhomogeneous shifts. Those variables are all that make one atom's dynamics (in terms of density matrices) different from any other, so all atoms within one such set have the same density matrix. Thus, only $n+2$ coupled equations with $n$ density matrices need to be solved. Letting $\ell$ be an index over these sets and $w_\ell$ be the number of atoms in set $\ell$ (of course $\sum_\ell w_\ell = N$), the system of equations becomes
+\begin{align}
+    \frac{d\alpha}{dt} &= -i\sum_{\ell=1}^{n} w_\ell g_{o,\ell}^*\rho_{j_oi_o,\ell} - \frac{\gamma_o}{2}\alpha \label{eq:biphoton_super_atom_optical_langevin_equation}\\
+    \frac{d\beta}{dt} &= -i\sum_{\ell=1}^{n} w_\ell g_{\mu,\ell}^*\rho_{j_\mu i_\mu,\ell} - \frac{\gamma_\mu}{2}\beta \label{eq:biphoton_super_atom_microwave_langevin_equation}\\
+    \frac{d\hat{\rho}_\ell}{dt} &= \mathcal{L}_\ell(\alpha, \beta)\hat{\rho}_\ell \label{eq:biphoton_super_atom_master_equation}
+\end{align}
+where $\gamma_o = \gamma_{oi}+\gamma_{oc}$ and $\gamma_\mu = \gamma_{\mu i} + \gamma_{\mu c}$. From these equations, $w_\ell$ can alternatively be interpreted as scale factors applied to the atom-cavity coupling strengths in the cavity Langevin equations (but not in the atom Master equations) to turn many atoms into a smaller number of `super-atoms' that interact more strongly with the cavities. Thus, $w_\ell$ need not necessarily even be integers because, by this interpretation, they are simply weights applied to the super-atoms.
+
+\subsection{Numerical Methods}
+A system of ordinary differential equations (ODEs) can be expressed as a single vector ODE $\frac{d\vec{x}}{dt} = \vec{f}(\vec{x})$, so that numerical methods for ODEs can be applied. The system in Equations \ref{eq:biphoton_super_atom_optical_langevin_equation}, \ref{eq:biphoton_super_atom_microwave_langevin_equation}, and \ref{eq:biphoton_super_atom_master_equation} can be expressed in this way with
+\begin{equation}
+    \vec{x} = [\Re\alpha, \Im\alpha, \Re\beta, \Im\beta, \rho_{11,1}, \Re\rho_{12,1}, \dots, \rho_{33,n}]^T \in \mathbb{R}^{9n+4},
+\end{equation}
+which contains the four cavity degrees of freedom followed by, for each super-atom, the nine degrees of freedom of its density matrix, as in Equation \ref{eq:real_density_matrix}. I implemented and used the 4th-order Runge-Kutta method\cite{faul_book} (RK4).
+
+\section{\label{sec:biphoton_results}Results}
+Both the steady-state and super-atom dynamics models were tested using parameters corresponding to the three-level \textLambda-system in Er:YSO in Reference \cite{barnett_longdell_2020}, which are shown in Table \ref{tab:biphoton_parameters}. For the steady-state model, $N_o = N = N_\mu$ was used, and for the super-atom dynamics model, $n=\num{1000000}$ super-atoms with equal weight $w_\ell = N/n$ were used. The super-atom simulations were initialised with all super-atoms in the ground state $\hat{\rho}_\ell = \ket{1}_\ell\bra{1}_\ell$ and with small cavity occupancies $\alpha = 1 = \beta$.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{c|c||c|c}
+Parameter & Value & Parameter & Value\\
+\hline
+$\omega_{12}$    & $2\pi \times \qty{5186}{\mega\hertz}$ & $\sigma_o$       & $2\pi \times \qty{419}{\mega\hertz}$ \\
+$\tau_{12}$      & $\qty{11}{\second}$                   & $\sigma_\mu$     & $2\pi \times \qty{5}{\mega\hertz}$   \\
+$\tau_{3}$       & $\qty{11}{\milli\second}$             & $N$              & $\num{1e16}$                         \\
+$d_{13}$         & $\qty{1.63e-32}{\coulomb\metre}$      & $\gamma_{oi}$    & $2\pi \times \qty{7.95}{\mega\hertz}$\\
+$d_{23}$         & $\qty{1.15e-32}{\coulomb\metre}$      & $\gamma_{oc}$    & $2\pi \times \qty{1.7}{\mega\hertz}$ \\
+$\tau_{13}$      & $\tau_3d_{13}^2/(d_{13}^2+d_{23}^2)$  & $\gamma_{\mu i}$ & $2\pi \times \qty{650}{\kilo\hertz}$ \\
+$\tau_{23}$      & $\tau_3d_{23}^2/(d_{13}^2+d_{23}^2)$  & $\gamma_{\mu c}$ & $2\pi \times \qty{1.5}{\mega\hertz}$ \\
+$T$              & $\qty{4.6}{\kelvin}$                  & $g_o$            & $\qty{51.9}{\hertz}$                 \\
+$\gamma_{2d}$    & $\qty{1}{\mega\hertz}$                & $g_\mu$          & $\qty{1.04}{\hertz}$                 \\
+$\gamma_{3d}$    & $\qty{1}{\mega\hertz}$                & $\Omega_p$       & $\qty{35}{\kilo\hertz}$              \\
+\end{tabular}
+\caption{\label{tab:biphoton_parameters} The parameters common to all runs of both the steady-state and super-atom dynamics models, reproduced from the parameters of the Er:YSO \textLambda-system in Reference \cite{barnett_longdell_2020} to provide a set of realistic parameters. $g_o$ and $g_\mu$ are the same across all atoms that have a nonzero coupling to the respective cavities.}
+\end{table}
+
+\subsection{Super-Atom Simulations}
+Results for the super-atom model are shown in Figure \ref{fig:biphoton_results_small} for small detunings $\delta_o = \qty{-100}{\kilo\hertz}$ and $\delta_\mu = \qty{1}{\mega\hertz}$, and in Figure \ref{fig:biphoton_results_large} for large detunings $\delta_o = -6.5\sigma_o$ and $\delta_\mu = 8\sigma_\mu$, with two runs each that have identical parameters, including identical inhomogeneous shift samples. The timescales shown, of dozens of microseconds, are much longer than the cavities' sub-microsecond characteristic dynamical timescales (their decay lifetimes), but much shorter than the atomic populations' characteristic dynamical timescales of milliseconds to seconds.
+
+There exists an adiabatic approximation of biphoton generation in a large-detuning regime\cite{rueda_2019} analogous to the adiabatic model of transduction in Section \ref{sec:adiabatic_elimination}. The large detunings were chosen so that they satisfied the requirements of the adiabatic approximation, and the small detunings were chosen so that they did not. These two sets of detunings therefore corresponded to distinct regimes of behaviour.
+
+Note that these results can largely only be interpreted qualitatively, because the same Rabi frequency can be produced by many different pump powers. Thus, power efficiency, and whether the pump power is constant over time or not, cannot be determined.
+
+%\newpage
+\subsubsection{Small Detuning}
+\begin{figure}[ht]
+\centering
+\includegraphics{biphoton-results-small}
+\caption{\label{fig:biphoton_results_small} Super-atom simulation results for detunings $\delta_o = \qty{-100}{\kilo\hertz}$ and $\delta_\mu = \qty{1}{\mega\hertz}$, which are not in the regime where the adiabatic approximation (Section \ref{sec:adiabatic_elimination}) holds. Solved using RK4 with time step $\Delta t = \qty{10}{\pico\second}$. Solid and translucent curves are two separate runs with identical parameters (including atom detunings), demonstrating amplification of floating-point errors.}
+\end{figure}
+
+The small-detuning super-atom runs exhibit highly non-convergent behaviour in the cavity dynamics for the entire length of the simulations, which does not visibly suggest that any steady state is being asymptotically approached. Furthermore, the two runs yielded very different dynamics, despite the fact that their parameters, initial conditions, and numerical ODE truncation are all identical, which indicates that floating-point errors\footnote{Floating-point arithmetic is, in principle, deterministic, so one may wonder why there are different rounding errors in different simulation runs. This is because the super-atom simulations are implemented with the super-atom dynamics running in parallel, and so the sums over super-atom density matrix elements in Equations \ref{eq:biphoton_super_atom_optical_langevin_equation} and \ref{eq:biphoton_super_atom_microwave_langevin_equation} are done in an undefined, variable order. Thus, the nonassociativity of floating point addition leads to slightly different rounding errors each time.} were amplified over time. This great divergence of dynamics from very similar earlier states is characteristic of a chaotic system. Such chaotic behaviour in light-matter systems has also been observed experimentally\cite{chen_2021}. Additionally, at some points, there is pulsed, periodic-like behaviour; such behaviour has also been observed in experiments in biphoton generation\cite{faraon_personal}.
+
+%\newpage
+\subsubsection{Large Detuning}
+\begin{figure}[ht]
+\centering
+\includegraphics{biphoton-results-large}
+\caption{\label{fig:biphoton_results_large} Super-atom simulation results for detunings $\delta_o = -6.5\sigma_o$ and $\delta_\mu = 8\sigma_\mu$, which are in the regime where the adiabatic approximation holds. Solved using RK4 with time step $\Delta t = \qty{50}{\pico\second}$. Rendered on the plots but indistinguishable due to overlap are distinct solid and translucent curves corresponding to two separate runs with identical parameters (including atom detunings), demonstrating that floating-point errors do not amplify over time.}
+\end{figure}
+
+By contrast, the large-detuning super-atom runs show quite simple dynamics that are consistent between the two runs, which show that the system is not chaotic for these large detunings. Furthermore, the dynamics are slowing down as time passes, and appear to be asymptotically approaching a steady state. Both of these facts are consistent with the adiabatic approximation holding at these large detunings. However, results\footnote{Or lack thereof} from the steady-state model, on the other hand, suggest that this apparent asymptote may not actually be a steady state.
+
+%\newpage
+\subsubsection{Stiffness}
+All runs of the super-atom model required time steps much smaller than the shortest characteristic timescale $1/\gamma_o \approx \qty{16.5}{\nano\second}$ of the system, otherwise the scales of the system dynamics variables grew unphysically large (e.g. $\tr\hat{\rho}_\ell \gg 1$) until exceeding the floating point limit and polluting every variable with $\infty$ and NaN. Specifically, $\Delta t = \qty{10}{\pico\second}$ was used for the small detuning and $\Delta t = \qty{50}{\pico\second}$ was used for the large detuning. This result indicates that this ODE problem is stiff.
+
+\subsection{Steady States}
+When running the steady-state model, the root-finding for Equations \ref{eq:biphoton_optical_cavity_steady_state_residual} and \ref{eq:biphoton_microwave_cavity_steady_state_residual} does not converge on any nontrivial solution, for both small and large detunings. This is despite the fact that the large-detuning super-atom simulations appear to be converging to a steady state. Indeed, there is no convergence even when using the final cavity amplitudes of those super-atom simulations as an initial guess for the steady state root-finding.
+
+\section{\label{sec:implicit_euler}Implicit Euler Method}
+Because the ODE problem in Equations \ref{eq:biphoton_super_atom_optical_langevin_equation}, \ref{eq:biphoton_super_atom_microwave_langevin_equation}, and \ref{eq:biphoton_super_atom_master_equation} is stiff, an implicit numerical method is more suitable than the explicit RK4 method. I describe here a procedure for implementing such a method, namely the implicit Euler method
+\begin{equation}
+    \vec{x}' = \vec{x} + \Delta t\vec{f}(\vec{x}') \label{eq:implicit_euler_method}
+\end{equation}
+where $\vec{x}'$ is the next time step after $\vec{x}$. This equation cannot be solved explicitly for $\vec{x}'$, and is instead a root-finding problem, which is what is meant by an `implicit' method. Rearranging Equation \ref{eq:implicit_euler_method}, the root-finding problem is to find the $\vec{x}'$ for which the residual
+\begin{equation}
+    \vec{x}_\text{res} = \vec{x} - \vec{x}' + \Delta t\vec{f}(\vec{x}') \label{eq:implicit_euler_residual}
+\end{equation}
+is zero. Breaking this down into $\alpha$, $\beta$, and $\hat{\rho}_\ell$ components and substituting the relevant differential equations for $\vec{f}$,
+\begin{align}
+    \alpha_\text{res} &= \alpha - \alpha' - i\Delta t\sum_{\ell=1}^{n} w_\ell g_{o,\ell}^*\rho'_{j_oi_o,\ell} - \frac{\gamma_o\Delta t}{2}\alpha'\\
+    \beta_\text{res} &= \beta - \beta' - i\Delta t\sum_{\ell=1}^{n} w_\ell g_{\mu,\ell}^*\rho'_{j_\mu i_\mu,\ell} - \frac{\gamma_\mu\Delta t}{2}\beta'\\
+    \hat{\rho}_{\text{res},\ell} &= \hat{\rho}_{\ell} - \hat{\rho}'_{\ell} + \Delta t\mathcal{L}_{\ell}(\alpha', \beta')\hat{\rho}'_{\ell}. \label{eq:implicit_euler_residual_master_equation}
+\end{align}
+In Equation \ref{eq:implicit_euler_residual_master_equation}, each $\ell$ is independent, and so they can be solved for $\hat{\rho}_{\text{res},\ell} = \hat{0}$ to obtain
+\begin{equation}
+    [\Delta t\mathcal{L}_{\ell}(\alpha', \beta')-\mathds{1}]\hat{\rho}'_{\ell} = -\hat{\rho}_{\ell}.
+\end{equation}
+Therefore, for a given guess of cavity amplitudes $\alpha'$ and $\beta'$, guesses of $\hat{\rho}'_{\ell}$ can be produced so that $\alpha_\text{res}$ and $\beta_\text{res}$ are the only nonzero residuals. This root-finding problem has therefore been reduced from having $9n+4$ real degrees of freedom to just the four real degrees of freedom of the cavities.

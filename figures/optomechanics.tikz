@@ -1,0 +1,17 @@
+\draw[thick,dashed] (-1.8, 0) .. controls (-0.9, 0.5) and (0.9, 0.5) .. (1.8, 0);
+\draw[thick] (-1.8, 0) .. controls (-0.9, -0.5) and (0.9, -0.5) .. (1.8, 0);
+\draw[<->,thick] (-2.0, -0.5) -- (-2.0, 0.5);
+
+\draw[very thick] (-1.8, -0.8) -- (-0.2, -0.8);
+\draw[very thick] (1.8, -0.8) -- (0.2, -0.8);
+\draw[thick] (1, -0.8) -- (1, -1) -- (1.5, -1) -- (1.5, -3) -- (1.0, -3);
+\draw[thick] (-1, -0.8) -- (-1, -1) -- (-1.5, -1) -- (-1.5, -3) -- (-1.0, -3);
+\draw[thick] (-1.0, -3) arc (180:0:0.25);
+\draw[thick] (-0.5, -3) arc (180:0:0.25);
+\draw[thick] (0.0, -3) arc (180:0:0.25);
+\draw[thick] (0.5, -3) arc (180:0:0.25);
+
+\draw[thick] (1.8, 1.8) -- (1.8, 2.5) -- (-1.8, 2.5) -- (-1.8, 1.8) .. controls (-0.9, 2.3) and (0.9, 2.3) .. cycle;
+
+\node[red,align=center] at (0, -1.8) {Microwave\\Resonator};
+\node[blue,align=center] at (0, 1.25) {Optical\\Cavity};

@@ -1,0 +1,170 @@
+\chapter{\label{ch:prior_transduction}Prior Work on Transduction Modelling}
+
+\begin{figure}[h]
+\centering
+\includetikzpicture{atoms-in-cavity.tikz}
+\caption{\label{fig:3lt_diagram} An illustration of a crystal in a cavity, with signals entering and exiting the cavity.}
+\end{figure}
+
+\noindent In this chapter, I review some existing modelling work\cite{williamson_2014,fernandez-gonzalvo_2019,barnett_longdell_2020} for microwave-optical quantum transduction using atomic ensembles in microwave and optical cavities. This prior work focuses on atoms in cavities rather than in free space, because cavity-based systems promise to be more efficient because of stronger light-matter interactions in cavities due to concentrated electromagnetic field. To begin, I present a fully quantum model for three-level atoms in cavities in Section \ref{sec:3lt_quantum_model}, and then in later sections, I review the semiclassical models of References \cite{williamson_2014,fernandez-gonzalvo_2019,barnett_longdell_2020}, and discuss the approximations made in those models. In Section \ref{sec:rho_ji_vs_ij}, I investigate relations between input and output phases in these models, and find that there is a physically sensible phase relation only if a particular modification is made to the model. The phases of optical photons can be used to encode quantum information, and so accurate predictions of phase are important to such applications. Notation used here may differ from that of the original sources.
+
+\section{\label{sec:3lt_quantum_model}Quantum Model}
+A fully quantum model for such a system is the Jaynes-Cummings-like Hamiltonian\cite{barnett_longdell_2020}
+\begin{equation}
+\label{eq:atoms_in_cavities_full_hamiltonian}
+    \hat{H} = \hat{H}_\text{cavities} + \sum_{k=1}^{N} \hat{H}_{\text{atom},k} + \sum_{k=1}^{N} \hat{H}_{\text{int},k}
+\end{equation}
+where $N$ is the total number of active atoms and $k$ is an index over the atoms. The Hamiltonian of the cavities is
+\begin{equation}
+    \hat{H}_\text{cavities} = \delta_{co} \hat{a}^\dagger\hat{a} + \delta_{c\mu} \hat{b}^\dagger\hat{b}
+\end{equation}
+where $\hat{a}$ and $\hat{b}$ are the lowering operators of the optical and microwave cavity modes respectively, and $\delta_{co} = \omega_{co} - \omega_o$ and $\delta_{c\mu} = \omega_{c\mu} - \omega_\mu$ are the detunings of the optical and microwave signals respectively from the resonant frequencies of the cavities. The other two components of Equation \ref{eq:atoms_in_cavities_full_hamiltonian} depend on whether the three-level system being used is a \textLambda-system or a V-system. The atom Hamiltonian, with both cases explicitly written out, is
+\begin{equation}
+    \hat{H}_{\text{atom},k} =
+    \begin{cases}
+        \delta_{\mu,k} \hat{\sigma}_{22,k} + \delta_{p,k} \hat{\sigma}_{33,k} & \text{\textLambda-system}\\
+        \delta_{o,k} \hat{\sigma}_{22,k} + \delta_{p,k} \hat{\sigma}_{33,k} & \text{V-system}
+    \end{cases}.
+\end{equation}
+$\hat{\sigma}_{ij,k} = \ket{i_k}\bra{j_k}$ are atomic unit matrices, $\delta_{o,k} = \omega_{13,k} - \omega_o$ is the detuning of the optical signal from the $\ket{1}\leftrightarrow\ket{3}$ transition frequency, and $\delta_{\mu,k}$ and $\delta_{p,k}$ are the detunings of the microwave and pump signals respectively from their corresponding atomic transition frequencies. These transition frequencies are different for each atom due to inhomogeneous broadening. By conservation of energy, $\delta_{\mu,k} + \delta_{p,k} = \delta_{o,k}$, and so, even though we only directly control the frequency of the two inputs, we always know the frequency of the output. The interaction Hamiltonian is
+\begin{equation}
+    \hat{H}_{\text{int},k} = \Omega_{p,k}\hat{\sigma}_{i_p j_p,k} + g_{o,k}\hat{a}\hat{\sigma}_{31,k} + g_{\mu,k}\hat{b}\hat{\sigma}_{i_\mu j_\mu,k} + \text{h.c.}
+\end{equation}
+where $\Omega_{p,k}$ is the pump Rabi frequency on atom $k$, $g_{o,k}$ and $g_{\mu,k}$ are the coupling strengths of atom $k$ to the optical and microwave cavities respectively, and $i_p$ and $j_p$ ($i_\mu$ and $j_\mu$) are the lower and upper atomic levels respectively of the transition corresponding to the pump (microwave) signal.
+
+The cavity Langevin equations for this system, which include damping and signal input-output, are
+\begin{align}
+    \frac{d\hat{a}}{dt} &= -i\delta_{co}\hat{a} - i\sum_{k=1}^{N} g_{o,k}^*\hat{\sigma}_{13,k} - \frac{\gamma_{oi}+\gamma_{oc}}{2}\hat{a} + \sqrt{\gamma_{oc}}\hat{a}_\text{in}(t) \label{eq:optical_cavity_quantum_langevin}\\
+    \frac{d\hat{b}}{dt} &= -i\delta_{c\mu}\hat{b} - i\sum_{k=1}^{N} g_{\mu,k}^*\hat{\sigma}_{i_\mu j_\mu,k} - \frac{\gamma_{\mu i}+\gamma_{\mu c}}{2}\hat{b} + \sqrt{\gamma_{\mu c}}\hat{b}_\text{in}(t)
+\end{align}
+where $\gamma_{oi}$ and $\gamma_{oc}$ ($\gamma_{\mu i}$ and $\gamma_{\mu c}$) are the energy loss rates of the optical (microwave) cavity through intrinsic damping and coupling to the input-output channel respectively. The output operators are, in analogy with Equation \ref{eq:input_output_theory_output},
+\begin{align}
+    \hat{a}_\text{out}(t) &= -\hat{a}_\text{in}(t) + \sqrt{\gamma_{oc}}\hat{a}(t) \label{eq:input_output_relation_a}\\
+    \hat{b}_\text{out}(t) &= -\hat{b}_\text{in}(t) + \sqrt{\gamma_{\mu c}}\hat{b}(t) \label{eq:input_output_relation_b}.
+\end{align}
+
+\section{\label{sec:adiabatic_elimination}Adiabatic Elimination of the Atomic Dynamics}
+\noindent The fully quantum model is intractable to solve exactly. One approach to simplifying the model into something tractable is that of Williamson et.\ al.\ (2014) \cite{williamson_2014}. By assuming that the atom-signal detunings are large ($\abs{\delta_{o,k}} \gg \abs{g_{o,k}}$, $\abs{\delta_{\mu,k}} \gg \abs{g_{\mu,k}}$, and $\abs{\delta_{o,k}\delta_{\mu_k}} \gg \abs{\Omega_{p,k}}^2$), we can approximate the indirect interaction of the microwave and optical cavities as a direct interaction, \textit{adiabatically eliminating}\cite{brion_2007} the atomic dynamics. This gives an effective interaction Hamiltonian for the system
+\begin{equation}
+    \hat{H}_\text{eff} = S\hat{a}^\dagger\hat{b} + S^*\hat{a}\hat{b}^\dagger
+\end{equation}
+where the effective interaction strength is
+\begin{equation}
+    S = \sum_{k=1}^{N} \frac{\Omega_{p,k}g_{\mu,k}g_{o,k}^*}{\delta_{o,k}\delta_{\mu,k}}.
+\end{equation}
+Note that this is the same Hamiltonian as for two cavities that share a mirror, with the transduction process being analogous to photons passing through the shared mirror. The cavity Langevin equations are then
+\begin{align}
+    \frac{d\hat{a}}{dt} &= -iS\hat{b} - \frac{\gamma_{oc}}{2}\hat{a} + \sqrt{\gamma_{oc}}\hat{a}_\text{in}(t)\\
+    \frac{d\hat{b}}{dt} &= -iS^*\hat{a} - \frac{\gamma_{\mu c}}{2}\hat{b} + \sqrt{\gamma_{\mu c}}\hat{b}_\text{in}(t);
+\end{align}
+this model further assumes that all loss in the cavities is through the input-output channels, i.e. $\gamma_{oi} = \gamma_{\mu i} = 0$. In the steady state of the cavities, the conversion efficiency (in both directions) can be found analytically to be
+\begin{equation}
+    \eta = \abs{\frac{4iS\sqrt{\gamma_{oc}\gamma_{\mu c}}}{4\abs{S}^2+\gamma_{oc}\gamma_{\mu c}}}^2.
+\end{equation}
+
+\section{Semiclassical Cavity and Atomic Master Equation Steady States}
+A less simplistic model, one which must be solved numerically rather than analytically, is that of Fernandez-Gonzalvo et.\ al.\ (2019) \cite{fernandez-gonzalvo_2019}. That paper only explicitly describes \textLambda-systems, but the generalisation to V-systems is straightforward. In this model, the atom-cavity interaction is replaced with semiclassical (Rabi) drives in the atom Hamiltonian
+\begin{equation}
+    \hat{H}_{\text{atom},k} =
+    \begin{bmatrix}
+        0 & \Omega_{\mu,k}^* & \Omega_{o,k}^*\\
+        \Omega_{\mu,k} & \delta_{\mu,k} & \Omega_{p,k}^*\\
+        \Omega_{o,k} & \Omega_{p,k} & \delta_{p,k}
+    \end{bmatrix}
+\end{equation}
+where $\Omega_{\mu,k}$ and $\Omega_{o,k}$ are the Rabi frequencies of the driving that results from coupling to the microwave and optical cavities respectively. With $\alpha$ as the semiclassical amplitude of the optical cavity, $\Omega_{o,k} = g_{o,k}\alpha$. However, we do not treat the microwave cavity similarly, and instead assume that its amplitude is large enough that atomic absorption and emission is negligible, and so disregard the dynamical details of $\Omega_{\mu,k}$, setting it to be some constant value.
+
+To handle the atomic dynamics, we use the Master equation
+\begin{equation}
+    \label{eq:three_level_atom_master_equation}
+    \frac{d\hat{\rho}_k}{dt} =: \mathcal{L}_k\hat{\rho}_k = -i[\hat{H}_{\text{atom},k}, \hat{\rho}_k] + \mathcal{L}_{\text{dec},k}\hat{\rho}_k
+\end{equation}
+with decoherence operator
+\begin{equation}
+\label{eq:three_level_atom_loss_operator}
+\begin{split}
+    \mathcal{L}_{\text{dec},k}\hat{\rho}_k &= \mathcal{L}_{12,k}\hat{\rho}_k + \mathcal{L}_{13,k}\hat{\rho}_k + \mathcal{L}_{23,k}\hat{\rho}_k + \mathcal{L}_{2d,k}\hat{\rho}_k + \mathcal{L}_{3d,k}\hat{\rho}_k\\
+    \mathcal{L}_{ij,k}\hat{\rho}_k &=
+    \begin{cases}
+        \begin{split}
+            &\frac{\gamma_{ij}(n_{ij,k}+1)}{2} \left(2\hat{\sigma}_{ij,k}\hat{\rho}_k\hat{\sigma}_{ji,k} - \hat{\rho}_k\hat{\sigma}_{jj,k} - \hat{\sigma}_{jj,k}\hat{\rho}_k\right)\\
+            &+ \frac{\gamma_{ij}n_{ij,k}}{2} \left(2\hat{\sigma}_{ji,k}\hat{\rho}_k\hat{\sigma}_{ij,k} - \hat{\rho}_k\hat{\sigma}_{ii,k} - \hat{\sigma}_{ii,k}\hat{\rho}_k\right)
+        \end{split}
+        & i=1,j=2\\
+        \frac{\gamma_{ij}}{2} \left(2\hat{\sigma}_{ij,k}\hat{\rho}_k\hat{\sigma}_{ji,k} - \hat{\rho}_k\hat{\sigma}_{jj,k} - \hat{\sigma}_{jj,k}\hat{\rho}_k\right) & \text{otherwise}
+    \end{cases}\\
+    \mathcal{L}_{id,k}\hat{\rho}_k &= \frac{\gamma_{id}}{2} \left(2\hat{\sigma}_{ii,k}\hat{\rho}_k\hat{\sigma}_{ii,k} - \hat{\rho}_k\hat{\sigma}_{ii,k} - \hat{\sigma}_{ii,k}\hat{\rho}_k\right).
+\end{split}
+\end{equation}
+$\gamma_{2d}$ and $\gamma_{3d}$ are the dephasing rates of levels $\ket{2}$ and $\ket{3}$ respectively with level $\ket{1}$, and $\gamma_{12,k}$, $\gamma_{13}$, and $\gamma_{23}$ are the relaxation rates via the indicated transitions. $n_{12,k}$ is the mean thermal excitation count at $\omega_{12,k}$, as per the Bose-Einstein distribution, which is approximately zero for all other transition frequencies. For this transition,
+\begin{equation}
+    \gamma_{12,k} = \frac{1}{\tau_{12}} \frac{1}{n_{12}+1}
+\end{equation}
+where $\tau_{12}$ is the relaxation lifetime, whereas the other transitions follow the simpler $\gamma_{ij} = 1/\tau_{ij}$.
+
+$\alpha$ evolves in time according to a semiclassical approximation of Equation \ref{eq:optical_cavity_quantum_langevin}, in which $\hat{a}$ is, of course, replaced with $\alpha$, and the $\hat{\sigma}_{ij,k}$ operators in the atomic interaction terms are replaced with $\rho_{ij,k}$ to give
+\begin{equation}
+    \label{eq:semiclassical_optical_cavity_langevin}
+    \frac{d\alpha}{dt} = -i\delta_{co}\alpha -i\sum_{k=1}^{N} g_{o,k}^* \rho_{13,k} - \frac{\gamma_{oi}+\gamma_{oc}}{2}\alpha + \sqrt{\gamma_{oc}}\alpha_\text{in}.
+\end{equation}
+
+\subsection{\label{subs:steady_states}Steady States}
+Despite this model being much smaller than the fully quantum model, operators having been replaced with complex numbers, it is still intractable to solve the time evolution of, because it requires $N$ density matrices to be stored in memory. Finding steady states, however, is tractable with a few further simplifications. Let $\hat{\rho}_{k,SS}(\alpha)$ be the steady state of the density matrix of atom $k$ given an optical cavity amplitude $\alpha$, which is found by solving the linear system in Equation \ref{eq:three_level_atom_master_equation}. We can drop the $k$ index by including as function arguments all atom variables to obtain $\hat{\rho}_{SS}(\Omega_{p,k}, g_{o,k}, \alpha, \Omega_{\mu,k}, \delta_{o,k}, \delta_{\mu,k}, \omega_{12,k})$. If we assume that all atoms have the same coupling strengths and Rabi frequencies, $\hat{\rho}_{SS}$ varies only with $\alpha$ and the inhomogeneous shifts of each atom. This allows us to replace the sum in Equation \ref{eq:semiclassical_optical_cavity_langevin} with an integral over the inhomogeneous distribution, of the form in Equation \ref{eq:inhomogeneous_convolution}
+\begin{equation}
+    \label{eq:optical_cavity_steady_state_equation}
+    \frac{d\alpha}{dt} = -i\delta_{co}\alpha -iNg_o^* \iint \rho_{13,SS}(\alpha, \delta_{12}, \delta_{23}) p(\delta_{12}, \delta_{23})\:d\delta_{12}d\delta_{23} - \frac{\gamma_{oi}+\gamma_{oc}}{2}\alpha + \sqrt{\gamma_{oc}}\alpha_\text{in}.
+\end{equation}
+Here, $\delta_{ij} = \omega_{ij} - \omega'_{ij}$ is the inhomogeneous shift of an atomic transition frequency $\omega_{ij}'$ from some `nominal' transition frequency $\omega_{ij}$, and $p(\delta_{12}, \delta_{23})$ is the PDF of those shifts. A value of $\alpha$ for which Equation \ref{eq:optical_cavity_steady_state_equation} is zero, i.e.\ a steady state, can be found using numerical root-finding, in which each iterative step involves evaluating the integral over the inhomogeneous distribution using some numerical quadrature scheme.
+
+\subsection{\label{subs:barnett_longdell_development}Further Development by Barnett and Longdell (2020)}
+Barnett and Longdell (2020) \cite{barnett_longdell_2020} further developed this model by including the dynamics of both cavities, with a semiclassical microwave cavity amplitude $\beta$ from which the microwave Rabi frequency $\Omega_\mu = g_\mu\beta$ derives. Additionally, the assumption that all atoms have equal interaction strengths was replaced with the assumption that $N_o \leq N$ atoms have equal $g_o$ and $N_\mu$ atoms have equal $g_\mu$, with the remaining atoms not interacting with those cavities at all, due to being outside the mode volume. Put together, this replaces Equation \ref{eq:optical_cavity_steady_state_equation} with the system
+\begin{align}
+    \frac{d\alpha}{dt} &= -i\delta_{co}\alpha -iN_og_o^* \iint \rho_{13,SS}(\alpha, \beta, \delta_{12}, \delta_{23}) p(\delta_{12}, \delta_{23})\:d\delta_{12}d\delta_{23} - \frac{\gamma_{oi}+\gamma_{oc}}{2}\alpha + \sqrt{\gamma_{oc}}\alpha_\text{in}\\
+    \frac{d\beta}{dt} &= -i\delta_{c\mu}\beta -iN_\mu g_\mu^* \iint \rho_{12,SS}(\alpha, \beta, \delta_{12}, \delta_{23}) p(\delta_{12}, \delta_{23})\:d\delta_{12}d\delta_{23} - \frac{\gamma_{\mu i}+\gamma_{\mu c}}{2}\beta + \sqrt{\gamma_{\mu c}}\beta_\text{in}.
+\end{align}
+
+\subsubsection{\label{ssubs:barnett_longdell_numerical_methods}Numerical Methods}
+When performing the integral over the inhomogeneous distribution, $\hat{\rho}_{SS}$ will vary rapidly around values for which $\hat{H}_\text{atom}(\delta_{12}, \delta_{23})$ has degenerate eigenvalues. Accordingly, to achieve good numerical accuracy in the integral, samples should be concentrated around those parts of the domain. Barnett and Longdell address this by splitting the two-variable integral into an inner and outer integral, and, for each inner integral, performing root finding on the discriminant of the characteristic polynomial of $\hat{H}_\text{atom}$, which is zero where the Hamiltonian has degenerate eigenvalues, and partitioning the domain interval of the inner integral about that root point. The integral on each of those subintervals is evaluated using Gauss-Lobatto quadrature\cite{faul_book}, which includes the endpoints of the interval in the nodes of integration. This ensures that the points of degenerate eigenvalues are not skipped in the numerical integral.
+
+\subsubsection{Real Density Matrix and Master Equation}
+An atomic density matrix $\hat{\rho}$ has nine complex elements, but because it is Hermitian, only nine real degrees of freedom. These degrees of freedom can be arranged in a real non-symmetric matrix
+\begin{equation}
+    \hat{\rho}_\text{real} =
+    \begin{bmatrix}
+        \rho_{11} & \Re\rho_{12} & \Re\rho_{13}\\
+        \Im\rho_{12} & \rho_{22} & \Re\rho_{23}\\
+        \Im\rho_{13} & \Im\rho_{23} & \rho_{33}
+    \end{bmatrix}.
+    \label{eq:real_density_matrix}
+\end{equation}
+Barnett (2019) \cite{barnett_msc} showed that this can be expressed as a linear transformation
+\begin{equation}
+    \hat{\rho}_\text{real} = \mathcal{C}\hat{\rho},
+\end{equation}
+and so the Master equation can be expressed as
+\begin{equation}
+\begin{split}
+    \frac{d\hat{\rho}_\text{real}}{dt} &= \mathcal{L}_\text{real} \hat{\rho}_\text{real}\\
+    \mathcal{L}_\text{real} &= \mathcal{C} \mathcal{L} \mathcal{C}^{-1}.
+\end{split}
+\label{eq:real_master_equation}
+\end{equation}
+Accordingly, steady states of the Master equation can be found as
+\begin{equation}
+    \hat{\rho}_{SS} = \mathcal{C}^{-1}\hat{\rho}_{\text{real},SS}
+\end{equation}
+where $\hat{\rho}_{\text{real},SS}$ is the steady state of Equation \ref{eq:real_master_equation}.
+
+\section{Comparisons of Models}
+Barnett (2019) \cite{barnett_msc} compared the numerical results of the semiclassical cavity amplitude and atomic master equation model to those of experiments with an Er:YSO (erbium doped in yttrium orthosilicate) crystal and found good agreement. That work also compared the theoretical and numerical results of that model to that of the simpler adiabatic model, and found significant disagreement between the two, at least for some choice of parameters. This demonstrates that the cavity amplitude and atomic master equation model is much more accurate than the adiabatic model.
+
+\section{\label{sec:rho_ji_vs_ij}Transduction Signal Phase Relations}
+In these models, the semiclassical approximation is formed by replacing the atomic unit matrices $\hat{\sigma}_{ij,k}$ with density matrix elements $\rho_{ij,k}$. However, the formal expectation values of these atomic unit matrices, using Equation \ref{eq:density_matrix_expectation_value}, are in fact $\angbr{\hat{\sigma}_{ij,k}} = \tr(\hat{\rho}_k\hat{\sigma}_{ij,k}) = \rho_{ji,k}$, which is the complex conjugate of $\rho_{ij,k}$. The papers acknowledge this, but use $\rho_{ij,k}$ instead. A complex conjugate flips phase and preserves magnitude, and so the choice of index order would have its effect on the output phases.
+
+Using my own implementation of the model in Reference \cite{barnett_longdell_2020}, I compute transduction signals for both index orders, to find the output phases. For each index order, I use the three different microwave input powers investigated in the paper\footnote{$\unit{dBm}$ is a `unit' of power which is a decibel scale with $\qty{0}{\dBm} = \qty{1}{\milli\watt}$, so that e.g.\ $\qty{30}{\dBm} = \qty{1}{\watt}$.} $P_\mu = \qty{-200}{\dBm}, \qty{-75}{\dBm}, \qty{5}{\dBm}$. For each, I perform $60$ trials of random pairs of phases for $\Omega_p$ and $\beta_\text{in}$. The optical pump strength was kept constant for all evaluations, with $\abs{\Omega_p} = \qty{35}{\kilo\hertz}$ as in Reference \cite{barnett_longdell_2020} (see Appendix \ref{ap:barnett_longdell_reverse}). All evaluations use zero detunings $\delta_o = \delta_\mu = \delta_{co} = \delta_{c\mu} = 0$. The results (Figure \ref{fig:3lt_phase}) showed that $\arg{\Omega} + \arg{\beta_\text{in}} - \arg{\alpha_\text{out}}$ was independent of phase for the $\rho_{ji,k}$ index order, but not for the $\rho_{ij,k}$ index order, and that this was the only `conserved' phase sum. Therefore, the effect of this complex conjugation on phase is quite nontrivial, and only $\rho_{ji,k}$ has a physically sensible relationship between input and output phases, in which inputs and outputs have internally consistent and opposite phases. Accordingly, I use $\hat{\sigma}_{ij,k}\to\rho_{ji,k}$ in all of my original modelling.
+
+\begin{figure}[h]
+\centering
+\includegraphics{3lt-phase}
+\caption{\label{fig:3lt_phase} Sum of input phases minus output phase, for $\hat{\sigma}_{ij,k}\to\rho_{ji,k}$ (top) and $\hat{\sigma}_{ij,k}\to\rho_{ij,k}$ (bottom) and for different microwave powers (columns). For $\rho_{ji,k}$, this phase sum is consistent for all input phases, though it does vary between power levels. For $\rho_{ij,k}$, on the other hand, it varies, only slightly for low powers but quite substantially at high power.}
+\end{figure}

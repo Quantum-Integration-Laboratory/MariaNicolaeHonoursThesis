@@ -1,0 +1,4 @@
+thesis.pdf
+code/__pycache__/*
+result-cache/*
+latex-build/*

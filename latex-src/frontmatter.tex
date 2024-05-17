@@ -1,0 +1,30 @@
+\begin{abstract}
+\textit{Quantum networking}, the transfer of quantum information across long distances, has great promise for scaling and interoperating quantum technologies, to allow us to solve problems that would not be possible or feasible classically. Many of the quantum systems that would form the nodes of this network have microwave energy scales, but the most feasible long-distance interconnects are fibre optics transmitting single optical photons. Thus, a means of correlating quantum information between microwave and optical systems is a near-requirement of quantum networking. This requires a hybrid microwave-optical quantum system, which can be used for quantum \textit{transduction}, direct conversion of microwave and optical photons, and microwave-optical entangled photon pair generation. In this project, I develop numerical models with which to characterise transduction efficiencies and photon pair generation rates in hybrid systems that use ensembles of atoms with both microwave and optical transitions.
+\end{abstract}
+
+\section*{Statement of Originality}
+I certify that this thesis contains work carried out by myself except where otherwise acknowledged.\\
+\vspace{1em}\\
+\includegraphics[height=30pt]{signature}
+\vspace*{-1em}\\
+\rule{3cm}{0.5pt}\\
+Maria Nicolae\\
+2024-05-17
+
+\section*{Acknowledgements}
+First of all, I would like to acknowledge my supervisor, Dr John Bartholomew. I thank him both for guiding and directing me throughout this project and for letting me occasionally deviate from that guidance and direction. I thank him for his patience while I was onboarding and learning the background for this project. I thank him for his hard working reviewing and giving feedback on drafts of this report as well as earlier Honours documents such as the talk and research plan. I also thank him for giving me the opportunities to attend the 2023 EQUS Annual Workshop and 2024 Quantum Australia conferences. 
+
+Next, I would like to thank Professor Andrew Doherty for taking time out of his day to help me understand quantum input-output theory, as well as for helping me reason about unitary transformations of Rabi Hamiltonians. I would also like to thank Gargi Tyagi for our discussions on input-output theory. 
+
+I would like to thank Dr Sahand Mahmoodian for our discussions about my biphoton generation modelling, and helping to clarifying some subtle points about the underlying physics, as well as future possibilities for the model.
+
+I would like to thank Ben Field and John for giving me spin Hamiltonian code that helped me understand the system so that I could write my own minimal implementation of the spin Hamiltonian of ytterbium.
+
+Finally, I would like to thank Gargi and Alice Jeffery for reading drafts of this report and giving me feedback, and Alice, Tim Newman, Ben, Gargi, John, and Elizabeth Marcellina for giving me feedback on a practice talk.
+
+\section*{Statement of Contribution of Student}
+I programmed my own implementations of the three-level transduction models in References \cite{fernandez-gonzalvo_2019} and \cite{barnett_longdell_2020}, and used these to replicate some of the plots in those references. After noticing discrepancies between and inconsistencies within those papers regarding phase conventions, I ran one of my model implementations to evaluate input and output phases, finding that only one convention produced physically sensible results.
+
+I developed and implemented in code a model for four-level transduction, building on top of the concepts in the existing three-level transduction models. I implemented numerical methods to mitigate grid aliasing that were based on and built on top of methods in Reference \cite{barnett_longdell_2020}. I then benchmarked this model against results from experiments described in Reference \cite{bartholomew_chip_2020}, finding the model parameters corresponding to those experiments, using a mixture of theory and trial-and-error manual adjustments. My supervisor also helped refine those parameters.
+
+I developed and implemented both steady-state and dynamical models for biphoton generation in three-level atomic systems, adapting the three-level transduction model in Reference \cite{barnett_longdell_2020} by changing indices of input and output atomic transitions, and modifying the atomic dynamics part of the model to accommodate vacuum interactions that start the generation processes into empty cavities.

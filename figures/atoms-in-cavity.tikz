@@ -1,0 +1,78 @@
+\draw[thick] (-3.5, -1.5) -- (-2.8, -1.5) .. controls (-3.2, -0.75) and (-3.2, 0.75) .. (-2.8, 1.5) -- (-3.5, 1.5) -- (-3.5, -1.5);
+\draw[thick] (3.5, -1.5) -- (2.8, -1.5) .. controls (3.2, -0.75) and (3.2, 0.75) .. (2.8, 1.5) -- (3.5, 1.5) -- (3.5, -1.5);
+\draw[very thick,->] (-5, 0.5) -- (-3.5, 0.5);
+\draw[very thick,<-] (-5, -0.5) -- (-3.5, -0.5);
+\draw[very thick,->] (5, 0.5) -- (3.5, 0.5);
+\draw[very thick,<-] (5, -0.5) -- (3.5, -0.5);
+
+\filldraw[fill=lightgray] (-0.7, -0.7) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.7, -0.5) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.7, -0.3) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.7, -0.1) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.7,  0.1) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.7,  0.3) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.7,  0.5) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.7,  0.7) circle[radius=0.1];
+
+\filldraw[fill=lightgray] (-0.5, -0.7) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.5, -0.5) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.5, -0.3) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.5, -0.1) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.5,  0.1) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.5,  0.3) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.5,  0.5) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.5,  0.7) circle[radius=0.1];
+
+\filldraw[fill=lightgray] (-0.3, -0.7) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.3, -0.5) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.3, -0.3) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.3, -0.1) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.3,  0.1) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.3,  0.3) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.3,  0.5) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.3,  0.7) circle[radius=0.1];
+
+\filldraw[fill=lightgray] (-0.1, -0.7) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.1, -0.5) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.1, -0.3) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.1, -0.1) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.1,  0.1) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.1,  0.3) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.1,  0.5) circle[radius=0.1];
+\filldraw[fill=lightgray] (-0.1,  0.7) circle[radius=0.1];
+
+\filldraw[fill=lightgray] ( 0.1, -0.7) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.1, -0.5) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.1, -0.3) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.1, -0.1) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.1,  0.1) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.1,  0.3) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.1,  0.5) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.1,  0.7) circle[radius=0.1];
+
+\filldraw[fill=lightgray] ( 0.3, -0.7) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.3, -0.5) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.3, -0.3) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.3, -0.1) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.3,  0.1) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.3,  0.3) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.3,  0.5) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.3,  0.7) circle[radius=0.1];
+
+\filldraw[fill=lightgray] ( 0.5, -0.7) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.5, -0.5) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.5, -0.3) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.5, -0.1) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.5,  0.1) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.5,  0.3) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.5,  0.5) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.5,  0.7) circle[radius=0.1];
+
+\filldraw[fill=lightgray] ( 0.7, -0.7) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.7, -0.5) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.7, -0.3) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.7, -0.1) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.7,  0.1) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.7,  0.3) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.7,  0.5) circle[radius=0.1];
+\filldraw[fill=lightgray] ( 0.7,  0.7) circle[radius=0.1];

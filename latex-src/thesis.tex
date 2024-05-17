@@ -1,0 +1,77 @@
+\documentclass[11pt]{report}
+\usepackage[a4paper,margin=20mm]{geometry}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{dsfont}
+\usepackage{textgreek}
+\usepackage{siunitx}
+\usepackage{pgf}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{multicol}
+\usepackage{subcaption}
+\usepackage[backend=biber,sorting=none,sortcites=true]{biblatex}
+
+\lstdefinestyle{mystyle}{
+    commentstyle=\it,
+    keywordstyle=\bf,
+    basicstyle=\ttfamily\footnotesize,
+    numbers=left,
+    frame=single,
+    breaklines=true,
+    breakatwhitespace=true,
+    showspaces=false,
+    keepspaces=true,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4
+}
+\lstset{style=mystyle}
+
+\newcommand{\abs}[1]{\left|#1\right|}
+\renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
+\newcommand{\vhat}[1]{\hat{\vec{#1}}}
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|}
+\newcommand{\bra}[1]{\left\langle#1\right|}
+\newcommand{\ket}[1]{\left|#1\right\rangle}
+\newcommand{\braket}[2]{\left.\left\langle#1\right|#2\right\rangle}
+\newcommand{\angbr}[1]{\left\langle{#1}\right\rangle}
+\DeclareMathOperator{\tr}{tr}
+\renewcommand{\Re}[0]{\operatorname{Re}}
+\renewcommand{\Im}[0]{\operatorname{Im}}
+\DeclareSIUnit{\dBm}{dBm}
+
+% gives me Sha, the Dirac comb symbol
+\DeclareFontFamily{U}{wncy}{}
+\DeclareFontShape{U}{wncy}{m}{n}{<->wncyr10}{}
+\DeclareSymbolFont{mcy}{U}{wncy}{m}{n}
+\DeclareMathSymbol{\Sh}{\mathord}{mcy}{"58} 
+
+\newcommand{\includetikzpicture}[1]{\begin{tikzpicture}\input{#1}\end{tikzpicture}}
+
+\addbibresource{thesis.bib}
+
+\begin{document}
+
+\include{titlepage}
+\include{frontmatter}
+
+\tableofcontents
+
+\include{introduction}
+\include{prior-transduction}
+\include{four-level-transduction}
+\include{biphoton-generation}
+\include{conclusion}
+
+\printbibliography
+
+\appendix
+\include{barnett-longdell-reverse}
+\include{efficiency-fit}
+\include{printed-code}
+
+\end{document}

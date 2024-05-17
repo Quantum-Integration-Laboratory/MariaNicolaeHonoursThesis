@@ -1,0 +1,1 @@
+This directory is for caching computational results that take a long time to compute, in order to speed up later executions
